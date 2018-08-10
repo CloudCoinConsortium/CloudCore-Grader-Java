@@ -4,7 +4,6 @@ public class Config  {
 
     public static String TAG_DETECTED = "Detected";
     public static String TAG_IMPORTED = "Imported";
-    public static String TAG_SUSPECT = "Suspect";
 
     public static String TAG_BANK = "Bank";
     public static String TAG_FRACKED = "Fracked";

@@ -15,7 +15,6 @@ public class FileSystem extends IFileSystem {
 
         ImportedFolder = RootPath + File.separator + Config.TAG_IMPORTED + File.separator;
         DetectedFolder = RootPath + File.separator + Config.TAG_DETECTED + File.separator;
-        SuspectFolder = RootPath + File.separator + Config.TAG_SUSPECT + File.separator;
 
         BankFolder = RootPath + File.separator + Config.TAG_BANK + File.separator;
         FrackedFolder = RootPath + File.separator + Config.TAG_FRACKED + File.separator;
@@ -33,7 +32,6 @@ public class FileSystem extends IFileSystem {
             Files.createDirectories(Paths.get(RootPath));
 
             Files.createDirectories(Paths.get(DetectedFolder));
-            Files.createDirectories(Paths.get(SuspectFolder));
 
             Files.createDirectories(Paths.get(BankFolder));
             Files.createDirectories(Paths.get(FrackedFolder));
