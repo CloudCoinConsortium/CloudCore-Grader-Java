@@ -19,7 +19,6 @@ public abstract class IFileSystem {
 
     public String ImportedFolder;
     public String DetectedFolder;
-    public String SuspectFolder;
 
     public String BankFolder;
     public String FrackedFolder;

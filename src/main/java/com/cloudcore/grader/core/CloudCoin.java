@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.File;
-import java.security.SecureRandom;
 import java.util.*;
 
 public class CloudCoin {
@@ -34,7 +33,7 @@ public class CloudCoin {
 
     /* Fields */
 
-    public transient String[] pan = new String[Config.NodeCount];
+    public transient String[] pan = new String[Config.nodeCount];
 
     public transient String folder;
 
