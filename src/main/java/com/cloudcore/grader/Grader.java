@@ -52,14 +52,14 @@ public class Grader {
      * Determines the coin's folder based on a simple grading schematic.
      */
     public void GradeSimple(CloudCoin coin) {
-        if (isPassingSimple(coin.pown)) {
-            if (isFrackedSimple(coin.pown))
+        if (isPassingSimple(coin.getPown())) {
+            if (isFrackedSimple(coin.getPown()))
                 coin.setFolder(FS.FrackedFolder);
             else
                 coin.setFolder(FS.BankFolder);
         }
         else {
-            if (isHealthySimple(coin.pown))
+            if (isHealthySimple(coin.getPown()))
                 coin.setFolder(FS.CounterfeitFolder);
             else
                 coin.setFolder(FS.LostFolder);

@@ -1,5 +1,6 @@
 package com.cloudcore.grader.core;
 
+import com.cloudcore.grader.utils.CoinUtils;
 import com.cloudcore.grader.utils.FileUtils;
 import com.cloudcore.grader.utils.Utils;
 import com.google.gson.Gson;
@@ -83,7 +84,7 @@ public abstract class IFileSystem {
         ArrayList<CloudCoin> folderCoins = LoadFolderCoins(targetFolder);
 
         for (CloudCoin coin : coins) {
-            String fileName = (coin.FileName());
+            String fileName = CoinUtils.generateFilename(coin);
             int coinExists = 0;
             for (CloudCoin folderCoin : folderCoins)
                 if (folderCoin.getSn() == coin.getSn())
