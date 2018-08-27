@@ -1,6 +1,6 @@
 package com.cloudcore.grader.core;
 
-public class Config  {
+public class Config {
 
     public static String TAG_DETECTED = "Detected";
     public static String TAG_IMPORTED = "Imported";
@@ -15,7 +15,6 @@ public class Config  {
 
     public static int NodeCount = 25;
 
-    public static String[] allowedExtensions = new String[] { ".stack", ".jpeg", ".chest", ".bank", ".jpg",".celebrium",".celeb",".csv" };
-
+    public static String[] allowedExtensions = new String[]{".stack", ".celebrium", ".csv"};
 
 }

@@ -59,15 +59,5 @@ public class FileSystem extends IFileSystem {
             files = new File[0];
         return files;
     }
-
-    @Override
-    public void MoveImportedFiles() {
-        File[] files = GetFilesArray(ImportedFolder, Config.allowedExtensions);
-
-        System.out.println("Moving files: " + files.length);
-        for (File file : files) {
-            MoveFile(file.getAbsolutePath(), ImportedFolder + File.separator + file.getName(), FileMoveOptions.Rename);
-        }
-    }
 }
 

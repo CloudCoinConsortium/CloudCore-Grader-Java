@@ -3,11 +3,14 @@ package com.cloudcore.grader.core;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.File;
 import java.security.SecureRandom;
 import java.util.*;
 
 public class CloudCoin {
 
+
+    /* JSON Fields */
 
     @Expose
     @SerializedName("nn")
@@ -28,6 +31,9 @@ public class CloudCoin {
     @SerializedName("aoid")
     public ArrayList<String> aoid;
 
+
+    /* Fields */
+
     public transient String[] pan = new String[Config.NodeCount];
 
     public transient String folder;
@@ -35,22 +41,15 @@ public class CloudCoin {
     public transient String currentFilename;
 
 
-    //Constructors
-
-    public CloudCoin(String currentFilename, int nn, int sn, ArrayList<String> an, String ed, String pown, ArrayList<String> aoid) {
-        this.currentFilename = currentFilename;
-        this.nn = nn;
-        this.sn = sn;
-        this.an = an;
-        this.ed = ed;
-        this.pown = pown;
-        this.aoid = aoid;
-    }
+    /* Methods */
 
     @Override
     public String toString() {
         return "cloudcoin: (nn:" + nn + ", sn:" + sn + ", ed:" + ed + ", aoid:" + aoid.toString() + ", an:" + an.toString() + ",\n pan:" + Arrays.toString(pan);
     }
+
+
+    /* Getters and Setters */
 
     public String FileName() {
         return this.getDenomination() + ".CloudCoin." + nn + "." + sn + ".";
@@ -80,5 +79,16 @@ public class CloudCoin {
         return sn;
     }
 
+    public void setFullFilePath(String fullFilePath) {
+        this.folder = fullFilePath.substring(0, 1 + fullFilePath.lastIndexOf(File.separatorChar));
+        this.currentFilename = fullFilePath.substring(1 + fullFilePath.lastIndexOf(File.separatorChar, fullFilePath.length()));
+    }
 
+    public void setFolder(String folder) {
+        this.folder = folder;
+    }
+
+    public String getFolder() {
+        return folder;
+    }
 }

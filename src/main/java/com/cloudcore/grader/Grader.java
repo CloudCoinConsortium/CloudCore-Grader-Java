@@ -30,10 +30,10 @@ public class Grader {
         ArrayList<CloudCoin> coinsLost = new ArrayList<>();
 
         for (CloudCoin coin : detectedCoins) {
-            if (coin.folder.equals(FS.BankFolder)) coinsBank.add(coin);
-            else if (coin.folder.equals(FS.FrackedFolder)) coinsFracked.add(coin);
-            else if (coin.folder.equals(FS.CounterfeitFolder)) coinsCounterfeit.add(coin);
-            else if (coin.folder.equals(FS.LostFolder)) coinsLost.add(coin);
+            if (coin.getFolder().equals(FS.BankFolder)) coinsBank.add(coin);
+            else if (coin.getFolder().equals(FS.FrackedFolder)) coinsFracked.add(coin);
+            else if (coin.getFolder().equals(FS.CounterfeitFolder)) coinsCounterfeit.add(coin);
+            else if (coin.getFolder().equals(FS.LostFolder)) coinsLost.add(coin);
         }
 
         updateLog("Coin Detection finished.");
@@ -46,8 +46,6 @@ public class Grader {
         FS.MoveCoins(coinsFracked, FS.DetectedFolder, FS.FrackedFolder);
         FS.MoveCoins(coinsCounterfeit, FS.DetectedFolder, FS.CounterfeitFolder);
         FS.MoveCoins(coinsLost, FS.DetectedFolder, FS.LostFolder);
-
-        FS.MoveImportedFiles();
     }
 
     /**
@@ -56,15 +54,15 @@ public class Grader {
     public void GradeSimple(CloudCoin coin) {
         if (isPassingSimple(coin.pown)) {
             if (isFrackedSimple(coin.pown))
-                coin.folder = FS.FrackedFolder;
+                coin.setFolder(FS.FrackedFolder);
             else
-                coin.folder = FS.BankFolder;
+                coin.setFolder(FS.BankFolder);
         }
         else {
             if (isHealthySimple(coin.pown))
-                coin.folder = FS.CounterfeitFolder;
+                coin.setFolder(FS.CounterfeitFolder);
             else
-                coin.folder = FS.LostFolder;
+                coin.setFolder(FS.LostFolder);
         }
     }
 

@@ -43,7 +43,7 @@ public abstract class IFileSystem {
                     case "celeb":
                     case "celebrium":
                     case "stack":
-                        ArrayList<CloudCoin> coins = FileUtils.loadCloudCoinsFromJSON(fileName);
+                        ArrayList<CloudCoin> coins = FileUtils.loadCloudCoinsFromStack(fileName);
                         if (coins != null)
                             folderCoins.addAll(coins);
                         break;
@@ -65,7 +65,7 @@ public abstract class IFileSystem {
                 }
                 if (options == FileMoveOptions.Rename) {
                     String targetFileName = SourcePath.substring(SourcePath.lastIndexOf(File.separator) + 1, SourcePath.lastIndexOf('.'));
-                    targetFileName += Utils.RandomString(8).toLowerCase() + ".stack";
+                    targetFileName += FileUtils.randomString(8).toLowerCase() + ".stack";
                     String targetPath = TargetPath + File.separator + targetFileName;
                     Files.move(Paths.get(SourcePath), Paths.get(targetPath));
 
@@ -75,8 +75,6 @@ public abstract class IFileSystem {
             e.printStackTrace();
         }
     }
-
-    public abstract void MoveImportedFiles();
 
     public void MoveCoins(ArrayList<CloudCoin> coins, String sourceFolder, String targetFolder) {
         MoveCoins(coins, sourceFolder, targetFolder, ".stack", false);
@@ -94,7 +92,7 @@ public abstract class IFileSystem {
             //int coinExists = (int) Arrays.stream(folderCoins.toArray(new CloudCoin[0])).filter(x -> x.getSn() == coin.getSn()).count();
 
             if (coinExists > 0 && !replaceCoins) {
-                String suffix = Utils.RandomString(16);
+                String suffix = FileUtils.randomString(16);
                 fileName += suffix.toLowerCase();
             }
             try {
