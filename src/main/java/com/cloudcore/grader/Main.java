@@ -3,22 +3,20 @@ package com.cloudcore.grader;
 import com.cloudcore.grader.core.FileSystem;
 import com.cloudcore.grader.utils.SimpleLogger;
 
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Main {
 
-    public static String rootFolder = Paths.get("C:/CloudCoins-Grader").toAbsolutePath().toString();
 
-    public static FileSystem FS;
     public static SimpleLogger logger;
+
 
     public static void main(String[] args) {
         try {
             setup();
 
-            Grader grader = new Grader(FS);
+            Grader grader = new Grader();
             grader.logger = logger;
 
             System.out.println("Grading coins...");
@@ -30,10 +28,9 @@ public class Main {
     }
 
     private static void setup() {
-        FS = new FileSystem(rootFolder);
-        FS.CreateDirectories();
+        FileSystem.createDirectories();
 
-        logger = new SimpleLogger(FS.LogsFolder + "logs" +
+        logger = new SimpleLogger(FileSystem.LogsFolder + "logs" +
                 LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")).toLowerCase() + ".log", true);
     }
 }

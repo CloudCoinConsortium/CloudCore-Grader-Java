@@ -9,18 +9,14 @@ import java.util.ArrayList;
 
 public class Grader {
 
-    public static FileSystem FS;
+    
     public SimpleLogger logger;
-
-    public Grader(FileSystem fileSystem) {
-        FS = fileSystem;
-    }
 
     /**
      * Categorizes coins into folders based on their pown results.
      */
     public void grade() {
-        ArrayList<CloudCoin> detectedCoins = FS.LoadFolderCoins(FS.DetectedFolder);
+        ArrayList<CloudCoin> detectedCoins = FileSystem.loadFolderCoins(FileSystem.DetectedFolder);
 
         detectedCoins.forEach(this::GradeSimple); // Apply Grading to all detected coins at once.
 
@@ -30,10 +26,10 @@ public class Grader {
         ArrayList<CloudCoin> coinsLost = new ArrayList<>();
 
         for (CloudCoin coin : detectedCoins) {
-            if (coin.getFolder().equals(FS.BankFolder)) coinsBank.add(coin);
-            else if (coin.getFolder().equals(FS.FrackedFolder)) coinsFracked.add(coin);
-            else if (coin.getFolder().equals(FS.CounterfeitFolder)) coinsCounterfeit.add(coin);
-            else if (coin.getFolder().equals(FS.LostFolder)) coinsLost.add(coin);
+            if (coin.getFolder().equals(FileSystem.BankFolder)) coinsBank.add(coin);
+            else if (coin.getFolder().equals(FileSystem.FrackedFolder)) coinsFracked.add(coin);
+            else if (coin.getFolder().equals(FileSystem.CounterfeitFolder)) coinsCounterfeit.add(coin);
+            else if (coin.getFolder().equals(FileSystem.LostFolder)) coinsLost.add(coin);
         }
 
         updateLog("Coin Detection finished.");
@@ -42,10 +38,10 @@ public class Grader {
         updateLog("Total Lost Coins - " + coinsLost.size() + "");
 
         // Move Coins to their respective folders after sort
-        FS.MoveCoins(coinsBank, FS.DetectedFolder, FS.BankFolder);
-        FS.MoveCoins(coinsFracked, FS.DetectedFolder, FS.FrackedFolder);
-        FS.MoveCoins(coinsCounterfeit, FS.DetectedFolder, FS.CounterfeitFolder);
-        FS.MoveCoins(coinsLost, FS.DetectedFolder, FS.LostFolder);
+        FileSystem.moveCoins(coinsBank, FileSystem.DetectedFolder, FileSystem.BankFolder);
+        FileSystem.moveCoins(coinsFracked, FileSystem.DetectedFolder, FileSystem.FrackedFolder);
+        FileSystem.moveCoins(coinsCounterfeit, FileSystem.DetectedFolder, FileSystem.CounterfeitFolder);
+        FileSystem.moveCoins(coinsLost, FileSystem.DetectedFolder, FileSystem.LostFolder);
     }
 
     /**
@@ -54,15 +50,15 @@ public class Grader {
     public void GradeSimple(CloudCoin coin) {
         if (isPassingSimple(coin.getPown())) {
             if (isFrackedSimple(coin.getPown()))
-                coin.setFolder(FS.FrackedFolder);
+                coin.setFolder(FileSystem.FrackedFolder);
             else
-                coin.setFolder(FS.BankFolder);
+                coin.setFolder(FileSystem.BankFolder);
         }
         else {
             if (isHealthySimple(coin.getPown()))
-                coin.setFolder(FS.CounterfeitFolder);
+                coin.setFolder(FileSystem.CounterfeitFolder);
             else
-                coin.setFolder(FS.LostFolder);
+                coin.setFolder(FileSystem.LostFolder);
         }
     }
 

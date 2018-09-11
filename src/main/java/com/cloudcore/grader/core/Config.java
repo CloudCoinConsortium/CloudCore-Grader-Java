@@ -8,7 +8,6 @@ public class Config {
     public static final int EXPIRATION_YEARS = 2;
 
     public static final String TAG_DETECTED = "Detected";
-    public static final String TAG_IMPORTED = "Imported";
 
     public static final String TAG_BANK = "Bank";
     public static final String TAG_FRACKED = "Fracked";
