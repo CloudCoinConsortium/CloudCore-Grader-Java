@@ -82,28 +82,6 @@ public class FileSystem {
         return folderCoins;
     }
 
-    public static void moveFile(String SourcePath, String TargetPath, FileSystem.FileMoveOptions options) {
-        try {
-            if (!Files.exists(Paths.get(TargetPath))) {
-                Files.move(Paths.get(SourcePath), Paths.get(TargetPath));
-            } else {
-                if (options == FileSystem.FileMoveOptions.Replace) {
-                    Files.delete(Paths.get(TargetPath));
-                    Files.move(Paths.get(SourcePath), Paths.get(TargetPath));
-                }
-                if (options == FileSystem.FileMoveOptions.Rename) {
-                    String targetFileName = SourcePath.substring(SourcePath.lastIndexOf(File.separator) + 1, SourcePath.lastIndexOf('.'));
-                    targetFileName += FileUtils.randomString(8).toLowerCase() + ".stack";
-                    String targetPath = TargetPath + File.separator + targetFileName;
-                    Files.move(Paths.get(SourcePath), Paths.get(targetPath));
-
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public static void moveCoins(ArrayList<CloudCoin> coins, String sourceFolder, String targetFolder) {
         moveCoins(coins, sourceFolder, targetFolder, ".stack", false);
     }
@@ -133,18 +111,6 @@ public class FileSystem {
                 e.printStackTrace();
             }
         }
-    }
-
-    public static File[] getFilesArray(String path, String[] extensions) {
-        final ArrayList<String> extensionsArray = new ArrayList<>(Arrays.asList(extensions));
-        File[] files = new File(path).listFiles(pathname -> {
-            String filename = pathname.getAbsolutePath();
-            String extension = filename.substring(filename.lastIndexOf('.')).toLowerCase();
-            return extensionsArray.contains(extension);
-        });
-        if (files == null)
-            files = new File[0];
-        return files;
     }
 }
 
