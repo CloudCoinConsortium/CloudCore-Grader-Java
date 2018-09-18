@@ -44,7 +44,14 @@ public class CloudCoin {
 
     @Override
     public String toString() {
-        return "cloudcoin: (nn:" + getNn() + ", sn:" + getSn() + ", ed:" + getEd() + ", aoid:" + getAoid().toString() + ", an:" + getAn().toString() + ",\n pan:" + Arrays.toString(pan);
+        StringBuilder builder = new StringBuilder();
+        builder.append("cloudcoin: (nn:").append(getNn()).append(", sn:").append(getSn());
+        if (null != getEd()) builder.append(", ed:").append(getEd());
+        if (null != getPown()) builder.append(", pown:").append(getPown());
+        if (null != getAoid()) builder.append(", aoid:").append(getAoid().toString());
+        if (null != getAn()) builder.append(", an:").append(getAn().toString());
+        if (null != pan) builder.append(", pan:").append(Arrays.toString(pan));
+        return builder.toString();
     }
 
 
@@ -60,9 +67,4 @@ public class CloudCoin {
 
     public void setEd(String ed) { this.ed = ed; }
     public void setFolder(String folder) { this.folder = folder; }
-
-    public void setFullFilePath(String fullFilePath) {
-        this.folder = fullFilePath.substring(0, 1 + fullFilePath.lastIndexOf(File.separatorChar));
-        this.currentFilename = fullFilePath.substring(1 + fullFilePath.lastIndexOf(File.separatorChar, fullFilePath.length()));
-    }
 }
