@@ -8,8 +8,10 @@ import com.google.gson.Gson;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -18,9 +20,8 @@ public class FileSystem {
 
     /* Fields */
 
-    public enum FileMoveOptions {Replace, Rename}
-
     public static String RootPath = "C:" + File.separator + "CloudCoins-Grader" + File.separator;
+    public static String RootPath = Paths.get("").toAbsolutePath().toString() + File.separator;
 
     public static String DetectedFolder = RootPath + Config.TAG_DETECTED + File.separator;
 
@@ -83,29 +84,15 @@ public class FileSystem {
     }
 
     public static void moveCoins(ArrayList<CloudCoin> coins, String sourceFolder, String targetFolder) {
-        moveCoins(coins, sourceFolder, targetFolder, ".stack", false);
+        moveCoins(coins, sourceFolder, targetFolder, ".stack");
     }
-
-    public static void moveCoins(ArrayList<CloudCoin> coins, String sourceFolder, String targetFolder, String extension, boolean replaceCoins) {
-        ArrayList<CloudCoin> folderCoins = loadFolderCoins(targetFolder);
-
+    public static void moveCoins(ArrayList<CloudCoin> coins, String sourceFolder, String targetFolder, String extension) {
         for (CloudCoin coin : coins) {
-            String fileName = CoinUtils.generateFilename(coin);
-            int coinExists = 0;
-            for (CloudCoin folderCoin : folderCoins)
-                if (folderCoin.getSn() == coin.getSn())
-                    coinExists++;
-            //int coinExists = (int) Arrays.stream(folderCoins.toArray(new CloudCoin[0])).filter(x -> x.getSn() == coin.getSn()).count();
+            String fileName = FileUtils.ensureFilenameUnique(CoinUtils.generateFilename(coin), extension, targetFolder);
 
-            if (coinExists > 0 && !replaceCoins) {
-                String suffix = FileUtils.randomString(16);
-                fileName += suffix.toLowerCase();
-            }
             try {
-                Gson gson = Utils.createGson();
-                Stack stack = new Stack(coin);
-                Files.write(Paths.get(targetFolder + fileName + extension), gson.toJson(stack).getBytes(StandardCharsets.UTF_8));
-                Files.deleteIfExists(Paths.get(sourceFolder + coin.currentFilename));
+                Files.move(Paths.get(sourceFolder + coin.currentFilename), Paths.get(targetFolder + fileName),
+                        StandardCopyOption.REPLACE_EXISTING);
             } catch (Exception e) {
                 System.out.println(e.getLocalizedMessage());
                 e.printStackTrace();
