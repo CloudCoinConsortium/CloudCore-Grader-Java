@@ -13,6 +13,9 @@ import static com.cloudcore.grader.utils.SimpleLogger.LogLevel.*;
 
 public class SimpleLogger {
 
+
+    /* Fields */
+
     private DateTimeFormatter DatetimeFormat;
     private String Filename;
 

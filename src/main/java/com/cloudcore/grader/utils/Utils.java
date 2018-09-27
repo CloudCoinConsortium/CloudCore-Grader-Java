@@ -13,6 +13,11 @@ import java.util.Random;
 public class Utils {
 
 
+    /**
+     * Creates a Gson object, a JSON parser for converting JSON Strings and objects.
+     *
+     * @return a Gson object.
+     */
     public static Gson createGson() {
         return new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()
