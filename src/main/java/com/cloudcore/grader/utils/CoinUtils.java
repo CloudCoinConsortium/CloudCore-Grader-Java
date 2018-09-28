@@ -12,11 +12,6 @@ public class CoinUtils {
 
     /* Methods */
 
-    public static String calcExpirationDate() {
-        LocalDate expirationDate = LocalDate.now().plusYears(Config.EXPIRATION_YEARS);
-        return (expirationDate.getMonthValue() + "-" + expirationDate.getYear());
-    }
-
     /**
      * Returns a denomination describing the currency value of the CloudCoin.
      *

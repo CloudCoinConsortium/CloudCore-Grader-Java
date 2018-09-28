@@ -65,6 +65,5 @@ public class CloudCoin {
     public ArrayList<String> getAoid() { return aoid; }
     public String getFolder() { return folder; }
 
-    public void setEd(String ed) { this.ed = ed; }
     public void setFolder(String folder) { this.folder = folder; }
 }
