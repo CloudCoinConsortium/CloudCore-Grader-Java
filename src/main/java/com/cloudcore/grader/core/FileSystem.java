@@ -21,9 +21,7 @@ public class FileSystem {
 
     /* Fields */
 
-    //public static String RootPath = "C:\\MyFiles\\work\\CloudCoin\\Dev\\Core-Grader\\"; // TODO: NEVER UPLOAD THIS TO GITHUB!
-    public static final String RootPath = "C:\\CloudCoin\\";
-    //public static String RootPath = Paths.get("").toAbsolutePath().toString() + File.separator;
+    public static final String RootPath = "C:" + File.separator + "CloudCoinServer" + File.separator + "accounts" + File.separator + "DefaultUser" + File.separator;
 
     public static String DetectedFolder = RootPath + Config.TAG_DETECTED + File.separator;
 
