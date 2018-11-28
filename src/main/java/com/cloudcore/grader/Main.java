@@ -1,36 +1,36 @@
 package com.cloudcore.grader;
 
 import com.cloudcore.grader.core.FileSystem;
+import com.cloudcore.grader.desktop.FolderWatcher;
 import com.cloudcore.grader.utils.SimpleLogger;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.Instant;
 
 public class Main {
 
 
-    public static SimpleLogger logger;
-
-
     public static void main(String[] args) {
-        try {
-            setup();
+        SimpleLogger.writeLog("ServantGraderStarted", "");
 
-            Grader grader = new Grader();
-            grader.logger = logger;
+        while (true) {
+            try {
+                FileSystem.createDirectories();
 
-            System.out.println("Grading coins...");
-            grader.grade();
-        } catch (Exception e) {
-            System.out.println("Uncaught exception - " + e.getLocalizedMessage());
-            e.printStackTrace();
+                FolderWatcher watcher = new FolderWatcher(FileSystem.DetectedFolder);
+                boolean stop = false;
+
+                if (0 != FileSystem.getTotalCoinsBank(FileSystem.DetectedFolder)[5])
+                    Grader.grade();
+
+                while (!stop) {
+                    if (watcher.newFileDetected()) {
+                        System.out.println(Instant.now().toString() + ": Grading coins...");
+                        Grader.grade();
+                    }
+                }
+            } catch (Exception e) {
+                System.out.println("Uncaught exception - " + e.getLocalizedMessage());
+            }
         }
-    }
-
-    private static void setup() {
-        FileSystem.createDirectories();
-
-        logger = new SimpleLogger(FileSystem.LogsFolder + "logs" +
-                LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")).toLowerCase() + ".log", true);
     }
 }

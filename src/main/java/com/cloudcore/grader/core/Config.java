@@ -15,6 +15,7 @@ public class Config {
     public static final String TAG_LOST = "Lost";
 
     public static final String TAG_LOGS = "Logs";
+    public static final String TAG_RECEIPTS = "Receipts";
 
 
     /* Fields */

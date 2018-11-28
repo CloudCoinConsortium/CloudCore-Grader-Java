@@ -2,6 +2,7 @@ package com.cloudcore.grader.core;
 
 import com.cloudcore.grader.utils.CoinUtils;
 import com.cloudcore.grader.utils.FileUtils;
+import com.cloudcore.grader.utils.SimpleLogger;
 import com.cloudcore.grader.utils.Utils;
 import com.google.gson.Gson;
 
@@ -20,7 +21,9 @@ public class FileSystem {
 
     /* Fields */
 
-    public static String RootPath = Paths.get("").toAbsolutePath().toString() + File.separator;
+    //public static String RootPath = "C:\\MyFiles\\work\\CloudCoin\\Dev\\Core-Grader\\"; // TODO: NEVER UPLOAD THIS TO GITHUB!
+    public static final String RootPath = "C:\\CloudCoin\\";
+    //public static String RootPath = Paths.get("").toAbsolutePath().toString() + File.separator;
 
     public static String DetectedFolder = RootPath + Config.TAG_DETECTED + File.separator;
 
@@ -30,6 +33,7 @@ public class FileSystem {
     public static String LostFolder = RootPath + Config.TAG_LOST + File.separator;
 
     public static String LogsFolder = RootPath + Config.TAG_LOGS + File.separator;
+    public static String ReceiptsFolder = RootPath + Config.TAG_RECEIPTS + File.separator;
 
 
     /* Methods */
@@ -46,13 +50,30 @@ public class FileSystem {
             Files.createDirectories(Paths.get(LostFolder));
 
             Files.createDirectories(Paths.get(LogsFolder));
+            Files.createDirectories(Paths.get(ReceiptsFolder));
         } catch (Exception e) {
-            System.out.println("FS#CD: " + e.getLocalizedMessage());
-            e.printStackTrace();
             return false;
         }
 
         return true;
+    }
+
+    public static int[] getTotalCoinsBank() {
+        return getTotalCoinsBank(BankFolder);
+    }
+    public static int[] getTotalCoinsBank(String accountFolder) {
+        int[] totals = new int[6];
+
+        int[] bankTotals = FileUtils.countCoins(accountFolder);
+
+        totals[5] = bankTotals[0];
+        totals[0] = bankTotals[1];
+        totals[1] = bankTotals[2];
+        totals[2] = bankTotals[3];
+        totals[3] = bankTotals[4];
+        totals[4] = bankTotals[5];
+
+        return totals;
     }
 
     /**
@@ -92,8 +113,10 @@ public class FileSystem {
             try {
                 Files.move(Paths.get(sourceFolder + coin.currentFilename), Paths.get(targetFolder + fileName),
                         StandardCopyOption.REPLACE_EXISTING);
+                String fileSeparator = (File.separatorChar == '\\') ? "\\\\" : File.separator;
+                String[] folders = targetFolder.split(fileSeparator);
+                SimpleLogger.writeLog(coin.getSn() + "." + folders[folders.length - 1], "");
             } catch (Exception e) {
-                System.out.println(e.getLocalizedMessage());
                 e.printStackTrace();
             }
         }
