@@ -5,6 +5,8 @@ public class Config {
 
     /* Constant Fields */
 
+    public static final String MODULE_NAME = "grader";
+
     public static final int EXPIRATION_YEARS = 2;
 
     public static final String TAG_DETECTED = "Detected";

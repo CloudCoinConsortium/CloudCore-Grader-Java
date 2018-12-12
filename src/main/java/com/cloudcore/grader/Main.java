@@ -10,7 +10,7 @@ public class Main {
 
 
     public static void main(String[] args) {
-        SimpleLogger.writeLog("ServantGraderStarted", "");
+        SimpleLogger.writeLog("ServantStarted", "");
 
         while (true) {
             try {
@@ -19,14 +19,12 @@ public class Main {
                 FolderWatcher watcher = new FolderWatcher(FileSystem.DetectedFolder);
                 boolean stop = false;
 
-                if (0 != FileSystem.getTotalCoinsBank(FileSystem.DetectedFolder)[5])
+                if (0 != FileSystem.getTotalCoins(FileSystem.DetectedFolder)[5])
                     Grader.grade();
 
                 while (!stop) {
-                    if (watcher.newFileDetected()) {
-                        System.out.println(Instant.now().toString() + ": Grading coins...");
+                    if (watcher.newFileDetected())
                         Grader.grade();
-                    }
                 }
             } catch (Exception e) {
                 System.out.println("Uncaught exception - " + e.getLocalizedMessage());

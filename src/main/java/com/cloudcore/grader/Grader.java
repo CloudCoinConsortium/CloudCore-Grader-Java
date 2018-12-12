@@ -6,6 +6,7 @@ import com.cloudcore.grader.utils.Utils;
 import com.cloudcore.grader.core.FileSystem;
 import com.cloudcore.grader.utils.SimpleLogger;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -18,6 +19,7 @@ public class Grader {
      * Categorizes coins into folders based on their pown results.
      */
     public static void grade() {
+        System.out.println(Instant.now().toString() + ": Grading coins...");
         ArrayList<CloudCoin> detectedCoins = FileSystem.loadFolderCoins(FileSystem.DetectedFolder);
 
         detectedCoins.forEach(Grader::gradeSimple); // Apply Grading to all detected coins at once.

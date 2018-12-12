@@ -3,18 +3,12 @@ package com.cloudcore.grader.core;
 import com.cloudcore.grader.utils.CoinUtils;
 import com.cloudcore.grader.utils.FileUtils;
 import com.cloudcore.grader.utils.SimpleLogger;
-import com.cloudcore.grader.utils.Utils;
-import com.google.gson.Gson;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class FileSystem {
 
@@ -30,7 +24,7 @@ public class FileSystem {
     public static String CounterfeitFolder = RootPath + Config.TAG_COUNTERFEIT + File.separator;
     public static String LostFolder = RootPath + Config.TAG_LOST + File.separator;
 
-    public static String LogsFolder = RootPath + Config.TAG_LOGS + File.separator;
+    public static String LogsFolder = RootPath + Config.TAG_LOGS + File.separator + Config.MODULE_NAME + File.separator;
     public static String ReceiptsFolder = RootPath + Config.TAG_RECEIPTS + File.separator;
 
 
@@ -56,10 +50,10 @@ public class FileSystem {
         return true;
     }
 
-    public static int[] getTotalCoinsBank() {
-        return getTotalCoinsBank(BankFolder);
+    public static int[] getTotalCoins() {
+        return getTotalCoins(BankFolder);
     }
-    public static int[] getTotalCoinsBank(String accountFolder) {
+    public static int[] getTotalCoins(String accountFolder) {
         int[] totals = new int[6];
 
         int[] bankTotals = FileUtils.countCoins(accountFolder);
@@ -113,7 +107,7 @@ public class FileSystem {
                         StandardCopyOption.REPLACE_EXISTING);
                 String fileSeparator = (File.separatorChar == '\\') ? "\\\\" : File.separator;
                 String[] folders = targetFolder.split(fileSeparator);
-                SimpleLogger.writeLog(coin.getSn() + "." + folders[folders.length - 1], "");
+                SimpleLogger.writeLog(coin.getSn() + " " + folders[folders.length - 1], "");
             } catch (Exception e) {
                 e.printStackTrace();
             }
