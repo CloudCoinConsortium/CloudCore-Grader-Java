@@ -15,7 +15,7 @@ public class FileSystem {
 
     /* Fields */
 
-    public static final String RootPath = "C:" + File.separator + "CloudCoinServer" + File.separator + "accounts" + File.separator + "DefaultUser" + File.separator;
+    public static String RootPath = "C:\\Users\\Public\\Documents\\CloudCoin";
 
     public static String DetectedFolder = RootPath + Config.TAG_DETECTED + File.separator;
 
@@ -48,6 +48,20 @@ public class FileSystem {
         }
 
         return true;
+    }
+
+    public static void changeRootPath(String rootPath) {
+        RootPath = rootPath;
+
+        DetectedFolder = RootPath + Config.TAG_DETECTED + File.separator;
+
+        BankFolder = RootPath + Config.TAG_BANK + File.separator;
+        FrackedFolder = RootPath + Config.TAG_FRACKED + File.separator;
+        CounterfeitFolder = RootPath + Config.TAG_COUNTERFEIT + File.separator;
+        LostFolder = RootPath + Config.TAG_LOST + File.separator;
+
+        LogsFolder = RootPath + Config.TAG_LOGS + File.separator + Config.MODULE_NAME + File.separator;
+        ReceiptsFolder = RootPath + Config.TAG_RECEIPTS + File.separator;
     }
 
     public static int[] getTotalCoins() {
